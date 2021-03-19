@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+    .main_container {
+        color: #333;
+        padding: 0;
+        width: 1170px;
+        margin: 16px auto 0;
+    }
+    .topbar {
+        height: 34px;
+        line-height: 34px;
+        background-color: #666666;
+        color: white;
+        font-size: 14px;
+    }
+    .left_nav {
+        float: left;
+    }
+    .right_nav {
+        float: right;
+    }
+    .left_container {
+        display: inline-block;
+        width: 110px;
+        height: 600px;
+        margin-left: 30px;
+        background-color: white;
+        vertical-align: top;
+    }
+    .left_content {
+        display: block;
+        width: 110px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        font-size: 17px;
+        color: black;
+
+    }
+    .middle_container {
+        color: #333;
+        margin: 0;
+        padding: 0;
+        display: inline-block;
+        width: 660px;
+    }
+    .middle_content {
+        color: #333;
+        padding: 0;
+        width: 660px;
+        margin: 0 auto;
+    }
+    .right_container { 
+        color: #333;
+        margin: 0;
+        padding: 0;
+        float: right;
+        width: 340px;
+        display: block;
+        vertical-align: top; 
+    }
+    .right_box {
+        color: #333;
+        margin: 0;
+        width: 300px;
+        border-top: 2px solid #ed4040;
+        background-color: #f4f5f6;
+        margin-bottom: 18px;
+        padding: 17px 20px 20px;
+    }
+    .right_box_head {
+        margin: 0;
+        color: #222;
+        padding: 0;
+        margin-bottom: 18px;
+        font-size: 18px;
+        font-weight: 700;
+    }
+    .ul_wrapper {
+        color: #333;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        margin-right: -20px;
+        margin-bottom: -20px;
+    }
+    .ul_wrapper li {
+        color: #333;
+        padding: 0;
+        list-style: none;
+        float: left;
+        margin: 0 20px 20px 0;
+    }
+    .search_container {
+        color: #333;
+        margin: 0;
+        padding: 0;
+        display: flex;
+    }
+    .search_input {    
+        margin: 0;
+        box-sizing: content-box;
+        flex: 1 1;
+        height: 36px;
+        font-size: 14px;
+        padding: 3px 10px;
+        color: #1f2d3d;
+        background-color: #f5f6f7;
+        border: 1px solid #e8e8e8;
+        border-radius: 4px;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        outline: 0;
+    }
+    .search_btn {
+        margin: 0;
+        box-sizing: content-box;
+        color: #fff;
+        background-color: #208eda;
+        border: 1px solid #208eda;
+        border-radius: 4px;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        position: relative;
+        left: -1px;
+        padding: 13px 24px;
+        cursor: pointer;
+    }
+    .search_btn button {
+        box-sizing: border-box;
+        text-align: center;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        font-size: 14px;
+        color: inherit;
+        background: #fff;
+        border-color: transparent;
+        border-radius: 4px;
+        border-top: 0;
+        border-bottom: 0;
+        background-color: transparent;
+        line-height: 1;
+        white-space: nowrap;
+        cursor: pointer;
+        outline: 0;
+    }
+    .feed {
+        color: #333;
+        margin: 0;
+        padding: 10px 0;
+        border-bottom: 1px solid #e8e8e8;
+    }
+    .title_box {
+        color: #333;
+        margin: 0;
+        padding: 0;
+        font-size: 20px;
+        line-height: 1.3;
+        margin-bottom: 4px;
+        font-weight: 700;
+        max-height: 52px;
+    }
+    .footer_bar {
+        margin: 0;
+        padding: 0;
+        font-size: 12px;
+        color: #999;
+        margin-top: 10px;
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 20px;
+    }
+    .single_feed {
+        color: #333;
+        margin: 0;
+        height: 102px;
+        padding: 10px 0;
+        border-bottom: 1px solid #e8e8e8;
+    }
+    .single_feed_l {
+        color: #333;
+        margin: 0;
+        padding: 0;
+        width: 158px;
+        height: 102px;
+        margin-right: 16px;
+        float: left;
+    }
+    .single_feed_r {
+        color: #333;
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+    }
+    .feed_pic {    
+        color: #222;
+        cursor: pointer;
+        text-align: center;
+        border: 0;
+        display: inline-block;
+        max-width: 100%;
+        height: 100px;
+        vertical-align: middle;
+    }
+    .single_feed_r_inner {
+        color: #333;
+        margin: 0;
+        padding: 0;
+        display: inline-block;
+        width: 100%;
+        vertical-align: middle;
+    }
+    .multi_feed {
+        color: #333;
+        margin: 0;
+        padding: 10px 0;
+        border-bottom: 1px solid #e8e8e8;
+    }
+    .pic_box {
+        color: #333;
+        padding: 0;
+        position: relative;
+        margin: 10px 0;
+        overflow: hidden;
+    }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        
+        <div class="left_nav">
+            Shanghai 
+        </div>
+        <div class="right_nav">
+            About
+        </div>
+    </div>
+    <div class="main_container">
+        <div class="left_container">
+            <div class="left_content">
+                今日头条
+            </div>
+            <div class="left_content">
+                推荐
+            </div>
+            <div class="left_content">
+                西瓜视频
+            </div>
+            <div class="left_content">
+                热点
+            </div>
+            <div class="left_content">
+                直播
+            </div>
+            <div class="left_content">
+                图片
+            </div>
+            <div class="left_content">
+                科技
+            </div>
+            <div class="left_content">
+                娱乐
+            </div>            
+            <div class="left_content">
+                游戏
+            </div>
+            <div class="left_content">
+                体育
+            </div>
+            <div class="left_content">
+                懂车帝
+            </div>
+            <div class="left_content">
+                财经
+            </div>
+            <div class="left_content">
+                数码
+            </div>
+            <div class="left_content">
+                更多
+            </div>
+        </div>
+        <div class="middle_container">
+            <div class="middle_content">
+                <div class="feed">
+                    <div class="title_box">
+                        难忘瞬间，见证7年深改历程
+                    </div>
+                    <div class="footer_bar">
+                        新华社
+                    </div>
+                </div>
+                <div class="feed">
+                    <div class="title_box">
+                        习近平：着力夯实创新发展人才基础
+                    </div>
+                    <div class="footer_bar">
+                        求是网
+                    </div>
+                </div>
+                <div class="single_feed">
+                    <div class="single_feed_l">
+                        <img src="https://t.m.youth.cn/magicimg/3g.youth.cn/rmtj/202103/W020210318462877808317.jpeg" class="feed_pic">
+                    </div>
+                    <div class="single_feed_r">
+                        <div class="single_feed_r_inner">
+                            <div class="title_box">
+                                四位“祖国的小朋友”，你们在哪儿？
+                            </div>
+                            <div class="footer_bar">
+                                中国青年网
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="multi_feed">
+                    <div class="title_box">
+                        学习直播教学工具，直播免费，收益0分成，老师免费入驻中!
+                    </div>
+                    <div class="pic_box">
+                        <div class="feed_pic">
+                            <img src="https://sf3-ttcdn-tos.pstatp.com/img/web.business.image/202012305d0d16ca3a5ec6004f239733~172x120_cs.jpeg?from=ad">
+                            <img src="https://sf3-ttcdn-tos.pstatp.com/img/web.business.image/202012305d0d16ca3a5ec6004f239733~172x120_cs.jpeg?from=ad">
+                            <img src="https://sf3-ttcdn-tos.pstatp.com/img/web.business.image/202012305d0d16ca3a5ec6004f239733~172x120_cs.jpeg?from=ad">
+                        </div>
+                    </div>
+                    <div class="footer_bar">
+                        广告
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="right_container">
+            <div class="search_container">
+                <input class="search_input" placeholder="搜索" value>
+                <div class="search_btn">
+                    <button type="button">搜索</button>
+                </div>
+            </div>
+            <div class="right_box">
+                <div class="right_box_head">
+                    更多
+                </div>
+                <ul class="ul_wrapper">
+                    <li>关于头条</li>
+                    <li>加入头条</li>
+                    <li>用户协议</li>
+                    <li>隐私政策</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

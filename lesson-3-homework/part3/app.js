@@ -2,21 +2,12 @@ const feedbox = document.getElementsByClassName("feed-box")[0]
 
 window.onscroll = function() {
     if (window.scrollY + window.innerHeight >= document.body.scrollHeight) {
-        console.log("reach the bottom")
         loadFeed()
     }
 }
 
-function loadFeed1() {
-
-}
-
-
-let index = 0
 function loadFeed() {
-    let url = "http://127.0.0.1:12345?index=" + "1"
-    index++
-    console.log(index)
+    let url = "http://127.0.0.1:12345"
 
     let request = new XMLHttpRequest()
     request.onreadystatechange = function() {

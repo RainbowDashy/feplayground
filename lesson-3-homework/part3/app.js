@@ -21,6 +21,8 @@ function loadFeed() {
     request.send()
 }
 
+loadFeed()
+
 function buildFeed(data) {
     for (let v of data) {
         console.log(v)

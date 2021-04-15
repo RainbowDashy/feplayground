@@ -129,6 +129,9 @@ function More() {
 export default function Home() {
     return (
         <>
+            <Head>
+                <title>Simple toutiao</title>
+            </Head>
             <Topbar />
             <div className={styles.main_container}>
                 <Nav />

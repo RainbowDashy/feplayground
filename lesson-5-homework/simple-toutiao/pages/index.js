@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "../styles/Home.module.css";
 
 function Topbar() {
@@ -41,7 +41,7 @@ function Content() {
             })
             .then((res) => {
                 console.log(res.data);
-                setData(data.concat(res.data));
+                setData(data => [...data, ...res.data]);
             });
     };
 
@@ -91,15 +91,25 @@ function Content() {
         );
     };
 
+    const loader = useRef(null);
     useEffect(() => {
-        loadFeed();
+        const observer = new IntersectionObserver(handleObserver);
+        if (loader.current) observer.observe(loader.current);
     }, []);
+
+    const handleObserver = (e) => {
+        const target = e[0];
+        if (target.isIntersecting) {
+            loadFeed();
+        }
+    };
 
     return (
         <div className={styles.feed_container}>
             <div className={styles.feedbox_wrapper}>
                 <div className={styles.feed_box}>{data.map(buildFeed)}</div>
             </div>
+            <div ref={loader}>load more</div>
         </div>
     );
 }

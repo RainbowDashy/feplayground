@@ -12,19 +12,9 @@ import {
 } from "@chakra-ui/react";
 import Head from "next/head";
 import NextLink from "next/link";
-import { useEffect, useState } from "react";
 import { format, isToday } from "date-fns";
 
-export default function PostList() {
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    fetch("/api/mock")
-      .then((res) => res.json())
-      .then((json) => {
-        console.log(json.data);
-        setData(json.data);
-      });
-  }, []);
+export default function PostList(props) {
 
   const calcTime = (date) => {
     if (isToday(date)) {
@@ -40,8 +30,15 @@ export default function PostList() {
       divider={<StackDivider borderColor="gray.200" />}
       spacing={4}
     >
-      {data.map((v, index) => (
-        <Flex bg="white" p={5} shadow="md" borderWidth="1px" w={960} key={index}>
+      {props.posts.map((v, index) => (
+        <Flex
+          bg="white"
+          p={5}
+          shadow="md"
+          borderWidth="1px"
+          w={960}
+          key={index}
+        >
           <Tooltip label="reply">
             <Center w="50px" mr="4" bg="gray.200" borderRadius="10px" h="30px">
               {v.reply_cnt}

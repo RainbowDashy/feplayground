@@ -41,7 +41,7 @@ export default function PostList() {
       spacing={4}
     >
       {data.map((v, index) => (
-        <Flex p={5} shadow="md" borderWidth="1px" w={960} key={index}>
+        <Flex bg="white" p={5} shadow="md" borderWidth="1px" w={960} key={index}>
           <Tooltip label="reply">
             <Center w="50px" mr="4" bg="gray.200" borderRadius="10px" h="30px">
               {v.reply_cnt}

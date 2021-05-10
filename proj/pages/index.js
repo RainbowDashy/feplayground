@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import { format, isToday } from "date-fns";
 import PostList from "../components/PostList";
 import NavBar from "../components/NavBar";
+import Comment from "../components/Comment"
 import useSWR from "swr";
 import fetcher from "../utils/fetcher"
 export default function Home({ posts }) {
@@ -32,6 +33,7 @@ export default function Home({ posts }) {
       </Head>
       <NavBar />
       <PostList posts={data.data} />
+      <Comment hasTitle/>
     </Center>
   );
 }

@@ -15,7 +15,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import NavBar from "../../components/NavBar"
-
+import Comment from "../../components/Comment"
 
 export default function Post() {
   const router = useRouter();
@@ -34,7 +34,7 @@ export default function Post() {
   return (
     <Box bg="gray.100">
       <NavBar />
-      <Center>
+      <Center flexDirection="column">
         <Head>
           <title>{data.title}</title>
           <meta name="description" content="simple tieba" />
@@ -70,7 +70,9 @@ export default function Post() {
               </Flex>
             ))}
         </VStack>
+        <Comment />
       </Center>
+      
     </Box>
   );
 }

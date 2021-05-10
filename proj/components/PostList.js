@@ -14,6 +14,7 @@ import Head from "next/head";
 import NextLink from "next/link";
 import { format, isToday } from "date-fns";
 
+
 export default function PostList(props) {
   const calcTime = (date) => {
     if (isToday(date)) {
@@ -35,7 +36,7 @@ export default function PostList(props) {
           p={5}
           shadow="md"
           borderWidth="1px"
-          w={960}
+          w="960px"
           key={index}
         >
           <Tooltip label="reply">
@@ -63,6 +64,7 @@ export default function PostList(props) {
           </Flex>
         </Flex>
       ))}
+      
     </VStack>
   );
 }

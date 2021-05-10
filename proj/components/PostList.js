@@ -15,7 +15,6 @@ import NextLink from "next/link";
 import { format, isToday } from "date-fns";
 
 export default function PostList(props) {
-
   const calcTime = (date) => {
     if (isToday(date)) {
       return format(date, "HH:mm");
@@ -45,8 +44,10 @@ export default function PostList(props) {
             </Center>
           </Tooltip>
           <Flex direction="column" grow={1}>
-            <Link as={NextLink} href={`/post/${v.pid}`}>
-              <Heading fontSize="2xl">{v.title}</Heading>
+            <Link>
+              <NextLink href={`/post/${v.pid}`}>
+                <Heading fontSize="2xl">{v.title}</Heading>
+              </NextLink>
             </Link>
             <Text fontSize="md" color="gray.400" isTruncated maxWidth="600px">
               {v.content}

@@ -17,11 +17,11 @@ import { useEffect, useState } from "react";
 import { format, isToday } from "date-fns";
 import PostList from "../components/PostList";
 import NavBar from "../components/NavBar";
-import Comment from "../components/Comment"
+import Comment from "../components/Comment";
 import useSWR from "swr";
-import fetcher from "../utils/fetcher"
+import fetcher from "../utils/fetcher";
 export default function Home({ posts }) {
-  const { data } = useSWR("/api/mock", fetcher, {
+  const { data } = useSWR("/api/posts", fetcher, {
     initialData: posts,
   });
   return (
@@ -32,14 +32,14 @@ export default function Home({ posts }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <NavBar />
-      <PostList posts={data.data} />
-      <Comment hasTitle/>
+      <PostList posts={data} />
+      <Comment hasTitle />
     </Center>
   );
 }
 
 export async function getServerSideProps() {
-  const res = await fetch("http://localhost:3000/api/mock");
+  const res = await fetch("http://localhost:3000/api/posts");
   const posts = await res.json();
   return { props: { posts } };
 }

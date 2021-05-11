@@ -9,32 +9,72 @@ export default function Comment(props) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [name, setName] = useState("");
-  const router = useRouter()
-
+  const router = useRouter();
 
   function handleTitle(e) {
-    setTitle(e.target.value)
+    setTitle(e.target.value);
   }
 
   function handleContent(e) {
-    setContent(e.target.value)
+    setContent(e.target.value);
   }
 
   function handleName(e) {
-    setName(e.target.value)
+    setName(e.target.value);
   }
 
   function handleSubmit(e) {
-    console.log(router)
+    console.log(router);
+    if (router.asPath === "/") {
+      let data = {
+        reply_cnt: 0,
+        title: title,
+        content,
+        user: name,
+        time: new Date().toJSON(),
+      };
+      fetch("/api/newpost", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((res) => res.json())
+        .then((data) => console.log(data));
+    } else {
+      let { pid } = router.query;
+      let data = {
+        _id: Number(pid),
+        content,
+        user: name,
+        time: new Date().toJSON(),
+      };
+      console.log(data);
+      fetch("/api/newreply", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((res) => res.json())
+        .then((data) => console.log(data));
+    }
   }
-
 
   return (
     <VStack w="960px" direction="column" bg="white" my={4}>
-      {props.hasTitle && <Input placeholder="Title" value={title} onChange={handleTitle}></Input>}
+      {props.hasTitle && (
+        <Input placeholder="Title" value={title} onChange={handleTitle}></Input>
+      )}
       <Textarea value={content} onChange={handleContent}></Textarea>
       <HStack align="flex-start">
-        <Input placeholder="Your name" value={name} onChange={handleName}></Input>
+        <Input
+          placeholder="Your name"
+          value={name}
+          onChange={handleName}
+        ></Input>
         <Button onClick={handleSubmit}>Submit</Button>
       </HStack>
     </VStack>

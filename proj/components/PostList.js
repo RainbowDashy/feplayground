@@ -46,7 +46,7 @@ export default function PostList(props) {
           </Tooltip>
           <Flex direction="column" grow={1}>
             <Link>
-              <NextLink href={`/post/${v.pid}`}>
+              <NextLink href={`/post/${v._id}`}>
                 <Heading fontSize="2xl">{v.title}</Heading>
               </NextLink>
             </Link>

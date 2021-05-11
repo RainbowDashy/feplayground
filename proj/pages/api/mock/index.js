@@ -1,12 +1,12 @@
 const rep = {
   data: [
     {
-      reply_cnt: 100,
-      title: "hello world",
-      content: "hello world hello world",
-      time: "2021-05-07T06:00:01.885Z",
-      user: "p0ny",
-      pid: 1,
+      "reply_cnt": 100,
+      "title": "hello world",
+      "content": "hello world hello world",
+      "time": "2021-05-07T06:00:01.885Z",
+      "user": "p0ny",
+      "pid": 1,
     },
     {
       reply_cnt: "100",

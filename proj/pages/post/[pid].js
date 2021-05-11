@@ -8,14 +8,13 @@ import {
   Box,
   Spacer,
 } from "@chakra-ui/react";
-import { AddIcon, ChatIcon, SearchIcon } from "@chakra-ui/icons";
 
 import { format } from "date-fns";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import NavBar from "../../components/NavBar"
-import Comment from "../../components/Comment"
+import NavBar from "../../components/NavBar";
+import Comment from "../../components/Comment";
 
 export default function Post() {
   const router = useRouter();
@@ -23,13 +22,14 @@ export default function Post() {
   const [data, setData] = useState({});
 
   useEffect(() => {
-    fetch(`/api/mock/${pid}`)
+    if (pid === undefined) return;
+    console.log("pid", pid);
+    fetch(`/api/posts/${pid}`)
       .then((res) => res.json())
       .then((res) => {
         setData(res);
-        console.log(res);
       });
-  }, []);
+  }, [pid]);
 
   return (
     <Box bg="gray.100">
@@ -41,8 +41,8 @@ export default function Post() {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <VStack w="980px" spacing={6}>
-          {data.data &&
-            data.data.map((v, index) => (
+          {data.reply &&
+            data.reply.map((v, index) => (
               <Flex
                 p={5}
                 shadow="md"
@@ -72,7 +72,6 @@ export default function Post() {
         </VStack>
         <Comment />
       </Center>
-      
     </Box>
   );
 }

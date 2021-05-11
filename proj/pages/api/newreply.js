@@ -3,6 +3,14 @@ import { connectToDatabase } from "../../utils/mongodb";
 export default async (req, res) => {
   if (req.method === "POST") {
     const { db } = await connectToDatabase();
+    await db.collection("posts").updateOne(
+      {
+        _id: req.body._id,
+      },
+      {
+        $inc: { reply_cnt: 1 },
+      }
+    );
     await db.collection("post").updateOne(
       {
         _id: req.body._id,
@@ -17,6 +25,6 @@ export default async (req, res) => {
         },
       }
     );
-    res.json(req.body)
+    res.json(req.body);
   }
 };

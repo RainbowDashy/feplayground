@@ -24,7 +24,6 @@ export default function Comment(props) {
   }
 
   function handleSubmit(e) {
-    console.log(router);
     if (router.asPath === "/") {
       let data = {
         reply_cnt: 0,
@@ -33,6 +32,10 @@ export default function Comment(props) {
         user: name,
         time: new Date().toJSON(),
       };
+
+      if (props.onComment)
+        props.onComment()
+
       fetch("/api/newpost", {
         method: "POST",
         headers: {
@@ -61,6 +64,9 @@ export default function Comment(props) {
         .then((res) => res.json())
         .then((data) => console.log(data));
     }
+    setTitle("");
+    setContent("");
+    setName("");
   }
 
   return (

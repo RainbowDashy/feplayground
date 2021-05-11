@@ -9,6 +9,7 @@ import {
   Avatar,
   Tooltip,
   Link,
+  Button,
 } from "@chakra-ui/react";
 import Head from "next/head";
 import Image from "next/image";
@@ -16,14 +17,17 @@ import NextLink from "next/link";
 import { useEffect, useState } from "react";
 import { format, isToday } from "date-fns";
 import PostList from "../components/PostList";
+import PostListSkeleton from "../components/PostListSkeleton";
 import NavBar from "../components/NavBar";
 import Comment from "../components/Comment";
 import useSWR from "swr";
 import fetcher from "../utils/fetcher";
+
 export default function Home({ posts }) {
-  const { data } = useSWR("/api/posts", fetcher, {
+  const { data, mutate } = useSWR("/api/posts", fetcher, {
     initialData: posts,
   });
+
   return (
     <Center bg="gray.100" flexDirection="column">
       <Head>
@@ -32,8 +36,10 @@ export default function Home({ posts }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <NavBar />
-      <PostList posts={data} />
-      <Comment hasTitle />
+      {data ? <PostList posts={data} /> : <PostListSkeleton />}
+
+      <Comment hasTitle onComment={mutate} />
+      <Button onClick={mutate}>click</Button>
     </Center>
   );
 }

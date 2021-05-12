@@ -25,10 +25,7 @@ import { InView } from "react-intersection-observer";
 
 const getKey = (pid) => {
   return (pageIndex, previousPageData) => {
-    console.log(`pid=${pid}, page=${pageIndex}`);
-    // console.log(previousPageData.hasMore)
     if (previousPageData && !previousPageData.hasMore) return null;
-
     return `/api/post/${pid}?page=${pageIndex}`;
   };
 };
@@ -67,13 +64,16 @@ export default function Post({ pid }) {
   const { data, size, setSize } = useSWRInfinite(getKey(pid), fetcher);
   const isEmpty = data?.[0]?.length === 0;
   const isReachingEnd = isEmpty || (data && !data[data.length - 1]?.hasMore);
-  console.log(data);
+  const [title, setTitle] = useState("");
+  useEffect(() => {
+    if (data) setTitle(data[0].title);
+  }, [data]);
   return (
     <Box bg="gray.100">
       <NavBar />
       <Center flexDirection="column">
         <Head>
-          {/* <title>{data.title}</title> */}
+          <title>{title}</title>
           <meta name="description" content="simple tieba" />
           <link rel="icon" href="/favicon.ico" />
         </Head>

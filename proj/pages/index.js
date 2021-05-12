@@ -30,6 +30,7 @@ import Comment from "../components/Comment";
 import NoMore from "../components/NoMore";
 import useSWR, { useSWRInfinite } from "swr";
 import fetcher from "../utils/fetcher";
+import { InView } from "react-intersection-observer";
 
 const getKey = (pageIndex, previousPageData) => {
   if (previousPageData && !previousPageData.hasMore) return null;
@@ -71,29 +72,27 @@ export default function Home({ posts }) {
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
-      {data ? (
+      {data &&
         data.map((posts, index) => {
           return (
             <Fragment key={index}>
-              {index != 0 && <Divider my={10} />}
               <PostList posts={posts.posts} />
+              <Divider my={10} />
             </Fragment>
           );
-        })
-      ) : (
-        <PostListSkeleton />
-      )}
+        })}
 
       {isReachingEnd ? (
         <NoMore />
       ) : (
-        <Button
-          onClick={() => {
-            setSize(size + 1);
+        <InView
+          as="div"
+          onChange={(inView) => {
+            if (inView) setSize(size + 1);
           }}
         >
-          click
-        </Button>
+          <PostListSkeleton />
+        </InView>
       )}
     </Center>
   );

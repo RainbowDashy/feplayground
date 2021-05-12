@@ -21,27 +21,25 @@ import {
 import Head from "next/head";
 import Image from "next/image";
 import NextLink from "next/link";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { format, isToday } from "date-fns";
 import PostList from "../components/PostList";
 import PostListSkeleton from "../components/PostListSkeleton";
 import NavBar from "../components/NavBar";
 import Comment from "../components/Comment";
+import NoMore from "../components/NoMore";
 import useSWR, { useSWRInfinite } from "swr";
 import fetcher from "../utils/fetcher";
 
 const getKey = (pageIndex, previousPageData) => {
-  if (previousPageData && !previousPageData.length) return null;
+  if (previousPageData && !previousPageData.hasMore) return null;
   return `/api/posts/${pageIndex}`;
 };
 
 export default function Home({ posts }) {
-  // const { data, mutate } = useSWR("/api/posts", fetcher, {
-  //   // initialData: posts,
-  // });
-
   const { data, size, setSize } = useSWRInfinite(getKey, fetcher);
-
+  const isEmpty = data?.[0]?.length === 0;
+  const isReachingEnd = isEmpty || (data && !data[data.length - 1]?.hasMore);
   return (
     <Center bg="gray.100" flexDirection="column">
       <Head>
@@ -76,22 +74,27 @@ export default function Home({ posts }) {
       {data ? (
         data.map((posts, index) => {
           return (
-            <>
-              {index != 0 && <Divider my={10}/>}
-              <PostList posts={posts} />
-            </>
+            <Fragment key={index}>
+              {index != 0 && <Divider my={10} />}
+              <PostList posts={posts.posts} />
+            </Fragment>
           );
         })
       ) : (
         <PostListSkeleton />
       )}
-      <Button
-        onClick={() => {
-          setSize(size + 1);
-        }}
-      >
-        click
-      </Button>
+
+      {isReachingEnd ? (
+        <NoMore />
+      ) : (
+        <Button
+          onClick={() => {
+            setSize(size + 1);
+          }}
+        >
+          click
+        </Button>
+      )}
     </Center>
   );
 }

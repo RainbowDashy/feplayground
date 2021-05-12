@@ -8,7 +8,9 @@ export default async (req, res) => {
     .find()
     .sort({ _id: -1 })
     .limit(10)
-    .skip(10*page)
+    .skip(10 * page)
     .toArray();
-  res.json(posts);
+  const count = await db.collection("post_count").findOne()
+  let data = {posts, hasMore: 10 * page + 10 < count.count}
+  res.json(data)
 };

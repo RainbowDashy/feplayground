@@ -24,7 +24,7 @@ export default function Post() {
   useEffect(() => {
     if (pid === undefined) return;
     console.log("pid", pid);
-    fetch(`/api/posts/${pid}`)
+    fetch(`/api/post/${pid}`)
       .then((res) => res.json())
       .then((res) => {
         setData(res);

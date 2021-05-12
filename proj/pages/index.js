@@ -10,6 +10,13 @@ import {
   Tooltip,
   Link,
   Button,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+  Spacer,
+  Divider,
 } from "@chakra-ui/react";
 import Head from "next/head";
 import Image from "next/image";
@@ -20,13 +27,20 @@ import PostList from "../components/PostList";
 import PostListSkeleton from "../components/PostListSkeleton";
 import NavBar from "../components/NavBar";
 import Comment from "../components/Comment";
-import useSWR from "swr";
+import useSWR, { useSWRInfinite } from "swr";
 import fetcher from "../utils/fetcher";
 
+const getKey = (pageIndex, previousPageData) => {
+  if (previousPageData && !previousPageData.length) return null;
+  return `/api/posts/${pageIndex}`;
+};
+
 export default function Home({ posts }) {
-  const { data, mutate } = useSWR("/api/posts", fetcher, {
-    initialData: posts,
-  });
+  // const { data, mutate } = useSWR("/api/posts", fetcher, {
+  //   // initialData: posts,
+  // });
+
+  const { data, size, setSize } = useSWRInfinite(getKey, fetcher);
 
   return (
     <Center bg="gray.100" flexDirection="column">
@@ -36,16 +50,54 @@ export default function Home({ posts }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <NavBar />
-      {data ? <PostList posts={data} /> : <PostListSkeleton />}
+      <Accordion allowToggle w="960px" my={4}>
+        <AccordionItem>
+          <AccordionButton>
+            <Text>New post</Text>
+            <Spacer />
+            <AccordionIcon />
+          </AccordionButton>
 
-      <Comment hasTitle onComment={mutate} />
-      <Button onClick={mutate}>click</Button>
+          <AccordionPanel px={0}>
+            <Comment
+              hasTitle
+              onCommentUpdate={(newData) => {
+                console.log(data);
+                console.log("new data", newData);
+                console.log("concat", [newData, ...data]);
+                // console.log(mutate([newData, ...data], false));
+                console.log(mutate([]));
+                console.log(data);
+              }}
+            />
+          </AccordionPanel>
+        </AccordionItem>
+      </Accordion>
+      {data ? (
+        data.map((posts, index) => {
+          return (
+            <>
+              {index != 0 && <Divider my={10}/>}
+              <PostList posts={posts} />
+            </>
+          );
+        })
+      ) : (
+        <PostListSkeleton />
+      )}
+      <Button
+        onClick={() => {
+          setSize(size + 1);
+        }}
+      >
+        click
+      </Button>
     </Center>
   );
 }
 
-export async function getServerSideProps() {
-  const res = await fetch("http://localhost:3000/api/posts");
-  const posts = await res.json();
-  return { props: { posts } };
-}
+// export async function getServerSideProps() {
+//   const res = await fetch("http://localhost:3000/api/posts");
+//   const posts = await res.json();
+//   return { props: { posts } };
+// }

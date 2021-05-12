@@ -33,8 +33,8 @@ export default function Comment(props) {
         time: new Date().toJSON(),
       };
 
-      if (props.onComment)
-        props.onComment()
+      if (props.onCommentUpdate)
+        props.onCommentUpdate(data)
 
       fetch("/api/newpost", {
         method: "POST",

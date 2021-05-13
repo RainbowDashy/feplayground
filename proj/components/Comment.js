@@ -39,8 +39,6 @@ export default function Comment(props) {
         },
         body: JSON.stringify(data),
       })
-        .then((res) => res.json())
-        .then((data) => console.log(data));
     } else {
       let { pid } = router.query;
       let data = {
@@ -49,7 +47,6 @@ export default function Comment(props) {
         user: name,
         time: new Date().toJSON(),
       };
-      console.log(data);
       fetch("/api/newreply", {
         method: "POST",
         headers: {
@@ -57,8 +54,6 @@ export default function Comment(props) {
         },
         body: JSON.stringify(data),
       })
-        .then((res) => res.json())
-        .then((data) => console.log(data));
     }
     setTitle("");
     setContent("");

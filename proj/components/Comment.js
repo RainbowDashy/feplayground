@@ -32,10 +32,6 @@ export default function Comment(props) {
         user: name,
         time: new Date().toJSON(),
       };
-
-      if (props.onCommentUpdate)
-        props.onCommentUpdate(data)
-
       fetch("/api/newpost", {
         method: "POST",
         headers: {
@@ -67,6 +63,10 @@ export default function Comment(props) {
     setTitle("");
     setContent("");
     setName("");
+    if (props.onComment) {
+      props.onComment()
+    }
+      
   }
 
   return (

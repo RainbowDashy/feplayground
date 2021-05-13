@@ -17,6 +17,7 @@ import {
   AccordionIcon,
   Spacer,
   Divider,
+  useToast,
 } from "@chakra-ui/react";
 import Head from "next/head";
 import Image from "next/image";
@@ -28,7 +29,7 @@ import PostListSkeleton from "../components/PostListSkeleton";
 import NavBar from "../components/NavBar";
 import Comment from "../components/Comment";
 import NoMore from "../components/NoMore";
-import useSWR, { useSWRInfinite } from "swr";
+import useSWR, { mutate, useSWRInfinite } from "swr";
 import fetcher from "../utils/fetcher";
 import { InView } from "react-intersection-observer";
 
@@ -38,11 +39,15 @@ const getKey = (pageIndex, previousPageData) => {
 };
 
 export default function Home({ posts }) {
-  const { data, size, setSize } = useSWRInfinite(getKey, fetcher, {
+  const { data, mutate, size, setSize } = useSWRInfinite(getKey, fetcher, {
     initialData: [{ posts, hasMore: true }],
+    revalidateOnMount: true,
   });
   const isEmpty = data?.[0]?.length === 0;
   const isReachingEnd = isEmpty || (data && !data[data.length - 1]?.hasMore);
+
+  const toast = useToast();
+
   return (
     <Center bg="gray.100" flexDirection="column">
       <Head>
@@ -62,13 +67,17 @@ export default function Home({ posts }) {
           <AccordionPanel px={0}>
             <Comment
               hasTitle
-              onCommentUpdate={(newData) => {
-                console.log(data);
-                console.log("new data", newData);
-                console.log("concat", [newData, ...data]);
-                // console.log(mutate([newData, ...data], false));
-                console.log(mutate([]));
-                console.log(data);
+              onComment={() => {
+                toast({
+                  title: "Successfully post.",
+                  status: "success",
+                  duration: 5000,
+                  isClosable: true,
+                });
+                mutate(data, false);
+                mutate();
+                console.log(mutate);
+                // ref https://github.com/vercel/swr/issues/908
               }}
             />
           </AccordionPanel>

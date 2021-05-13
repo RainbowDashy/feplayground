@@ -9,6 +9,7 @@ import {
   Spacer,
   Button,
   Divider,
+  useToast,
 } from "@chakra-ui/react";
 
 import { format } from "date-fns";
@@ -61,13 +62,18 @@ function Page(props) {
 }
 
 export default function Post({ pid }) {
-  const { data, size, setSize } = useSWRInfinite(getKey(pid), fetcher);
+  const { data, mutate, size, setSize } = useSWRInfinite(getKey(pid), fetcher, {
+    revalidateOnMount: true,
+  });
   const isEmpty = data?.[0]?.length === 0;
   const isReachingEnd = isEmpty || (data && !data[data.length - 1]?.hasMore);
   const [title, setTitle] = useState("");
   useEffect(() => {
     if (data) setTitle(data[0].title);
   }, [data]);
+
+  const toast = useToast();
+
   return (
     <Box bg="gray.100">
       <NavBar />
@@ -86,7 +92,20 @@ export default function Post({ pid }) {
               </Fragment>
             ))}
         </VStack>
-        <Comment />
+        <Comment
+          onComment={() => {
+            toast({
+              title: "Successfully replied.",
+              status: "success",
+              duration: 5000,
+              isClosable: true,
+            });
+            mutate(data, false);
+            mutate();
+            console.log("calling mutate");
+            // ref https://github.com/vercel/swr/issues/908
+          }}
+        />
         {isReachingEnd ? (
           <NoMore />
         ) : (

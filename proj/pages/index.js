@@ -1,3 +1,4 @@
+import { connectToDatabase } from "../utils/mongodb";
 import {
   Box,
   VStack,
@@ -110,7 +111,7 @@ export default function Home({ posts }) {
 }
 
 export async function getServerSideProps() {
-  const res = await fetch("http://localhost:3000/api/posts");
-  const posts = await res.json();
+  const { db } = await connectToDatabase();
+  const posts = await db.collection("posts").find().sort({"_id": -1}).limit(10).skip(0).toArray();
   return { props: { posts } };
 }

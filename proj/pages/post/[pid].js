@@ -1,3 +1,4 @@
+import { connectToDatabase } from "../../utils/mongodb";
 import {
   Avatar,
   Center,
@@ -126,9 +127,22 @@ export default function Post({ pid, initData }) {
 
 export async function getServerSideProps(ctx) {
   const { pid } = ctx.query;
-
-  const res = await fetch(`http://localhost:3000/api/post/${pid}`);
-  const data = await res.json();
+  const { db } = await connectToDatabase();
+  const reply_cnt = await db.collection("posts").findOne(
+    { _id: Number(pid) },
+    {
+      projection: {
+        reply_cnt: 1,
+      },
+    }
+  );
+  let count = reply_cnt.reply_cnt + 1;
+  const post = await db
+    .collection("post")
+    .find({ _id: Number(pid) })
+    .project({ reply: { $slice: [0, 10] } })
+    .toArray();
+  let data = { ...post[0], hasMore: 10 < count };
   return {
     props: {
       pid,

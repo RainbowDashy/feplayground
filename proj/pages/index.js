@@ -38,7 +38,9 @@ const getKey = (pageIndex, previousPageData) => {
 };
 
 export default function Home({ posts }) {
-  const { data, size, setSize } = useSWRInfinite(getKey, fetcher);
+  const { data, size, setSize } = useSWRInfinite(getKey, fetcher, {
+    initialData: [{ posts, hasMore: true }],
+  });
   const isEmpty = data?.[0]?.length === 0;
   const isReachingEnd = isEmpty || (data && !data[data.length - 1]?.hasMore);
   return (
@@ -98,8 +100,8 @@ export default function Home({ posts }) {
   );
 }
 
-// export async function getServerSideProps() {
-//   const res = await fetch("http://localhost:3000/api/posts");
-//   const posts = await res.json();
-//   return { props: { posts } };
-// }
+export async function getServerSideProps() {
+  const res = await fetch("http://localhost:3000/api/posts");
+  const posts = await res.json();
+  return { props: { posts } };
+}

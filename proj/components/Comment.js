@@ -70,7 +70,7 @@ export default function Comment(props) {
   }
 
   return (
-    <VStack w="960px" direction="column" bg="white" my={4}>
+    <VStack w="960px" direction="column" bg="white" p={2} shadow="md" borderWidth="1px">
       {props.hasTitle && (
         <Input placeholder="Title" value={title} onChange={handleTitle}></Input>
       )}

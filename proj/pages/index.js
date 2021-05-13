@@ -56,7 +56,7 @@ export default function Home({ posts }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <NavBar />
-      <Accordion allowToggle w="960px" my={4}>
+      <Accordion allowToggle w="960px" my={4} defaultIndex={0}>
         <AccordionItem>
           <AccordionButton>
             <Text>New post</Text>

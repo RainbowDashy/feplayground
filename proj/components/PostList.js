@@ -9,11 +9,12 @@ import {
   Avatar,
   Tooltip,
   Link,
+  LinkBox,
+  LinkOverlay,
 } from "@chakra-ui/react";
 import Head from "next/head";
 import NextLink from "next/link";
 import { format, isToday } from "date-fns";
-
 
 export default function PostList(props) {
   const calcTime = (date) => {
@@ -31,13 +32,14 @@ export default function PostList(props) {
       spacing={4}
     >
       {props.posts.map((v, index) => (
-        <Flex
+        <LinkBox
           bg="white"
           p={5}
           shadow="md"
           borderWidth="1px"
           w="960px"
           key={index}
+          display="flex"
         >
           <Tooltip label="reply">
             <Center w="50px" mr="4" bg="gray.200" borderRadius="10px" h="30px">
@@ -46,8 +48,10 @@ export default function PostList(props) {
           </Tooltip>
           <Flex direction="column" grow={1}>
             <Link>
-              <NextLink href={`/post/${v._id}`}>
-                <Heading fontSize="2xl">{v.title}</Heading>
+              <NextLink href={`/post/${v._id}`} passHref>
+                <LinkOverlay>
+                  <Heading fontSize="2xl">{v.title}</Heading>
+                </LinkOverlay>
               </NextLink>
             </Link>
             <Text fontSize="md" color="gray.400" isTruncated maxWidth="600px">
@@ -62,9 +66,8 @@ export default function PostList(props) {
               </Tooltip>
             </Text>
           </Flex>
-        </Flex>
+        </LinkBox>
       ))}
-      
     </VStack>
   );
 }

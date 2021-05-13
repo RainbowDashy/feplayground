@@ -61,8 +61,9 @@ function Page(props) {
   ));
 }
 
-export default function Post({ pid }) {
+export default function Post({ pid, initData }) {
   const { data, mutate, size, setSize } = useSWRInfinite(getKey(pid), fetcher, {
+    initialData: [initData],
     revalidateOnMount: true,
   });
   const isEmpty = data?.[0]?.length === 0;
@@ -125,9 +126,13 @@ export default function Post({ pid }) {
 
 export async function getServerSideProps(ctx) {
   const { pid } = ctx.query;
+
+  const res = await fetch(`http://localhost:3000/api/post/${pid}`);
+  const data = await res.json();
   return {
     props: {
       pid,
+      initData: data,
     },
   };
 }

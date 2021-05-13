@@ -10,9 +10,9 @@ First setup your mongoDB.
 
 Create `.env.local`and set environment variables as shown in `.env.local.example`.
 
-Create the following collections:`post`, `posts`, `reply_cnt`
+Create the following collections:`post`, `posts`, `post_count`
 
-Insert `{_id: 0, reply_cnt: 0}` in `reply_cnt`
+Insert `{_id: 0, count: 0}` in `post_count`
 
 Then, run the following commands
 

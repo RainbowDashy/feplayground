@@ -8,6 +8,15 @@ import {
   Box,
   Divider,
   useToast,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  useDisclosure,
+  Button,
+  DrawerBody,
+  Tooltip,
+  DrawerHeader,
 } from "@chakra-ui/react";
 
 import { format } from "date-fns";
@@ -20,6 +29,7 @@ import { useSWRInfinite } from "swr";
 import NoMore from "../../components/NoMore";
 import PostListSkeleton from "../../components/PostListSkeleton";
 import { InView } from "react-intersection-observer";
+import { EditIcon } from "@chakra-ui/icons";
 
 const getKey = (pid) => {
   return (pageIndex, previousPageData) => {
@@ -71,10 +81,16 @@ export default function Post({ pid, initData }) {
   }, [data]);
 
   const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <Box bg="gray.100">
       <NavBar />
+      <Button onClick={onOpen} pos="sticky" top="90%" left="90%">
+        <Tooltip label="Reply">
+          <EditIcon h={6} w={6} />
+        </Tooltip>
+      </Button>
       <Center flexDirection="column">
         <Head>
           <title>{title}</title>
@@ -90,19 +106,33 @@ export default function Post({ pid, initData }) {
               </Fragment>
             ))}
         </VStack>
-        <Comment
-          onComment={() => {
-            toast({
-              title: "Successfully replied.",
-              status: "success",
-              duration: 5000,
-              isClosable: true,
-            });
-            mutate(data, false);
-            mutate();
-            // ref https://github.com/vercel/swr/issues/908
-          }}
-        />
+
+        <Drawer isOpen={isOpen} placement="bottom" onClose={onClose} size="lg">
+          <DrawerOverlay />
+          <DrawerContent align="center">
+            <DrawerCloseButton />
+            <DrawerHeader>
+              Your reply
+            </DrawerHeader>
+            <DrawerBody>
+              <Flex justify="center">
+                <Comment
+                  onComment={() => {
+                    toast({
+                      title: "Successfully replied.",
+                      status: "success",
+                      duration: 5000,
+                      isClosable: true,
+                    });
+                    mutate(data, false);
+                    mutate();
+                    // ref https://github.com/vercel/swr/issues/908
+                  }}
+                />
+              </Flex>
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer>
         {isReachingEnd ? (
           <NoMore />
         ) : (

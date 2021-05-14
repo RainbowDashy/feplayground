@@ -3,19 +3,15 @@ import {
   Avatar,
   Center,
   Flex,
-  StackDivider,
   VStack,
   Text,
   Box,
-  Spacer,
-  Button,
   Divider,
   useToast,
 } from "@chakra-ui/react";
 
 import { format } from "date-fns";
 import Head from "next/head";
-import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
 import NavBar from "../../components/NavBar";
 import Comment from "../../components/Comment";
@@ -104,7 +100,6 @@ export default function Post({ pid, initData }) {
             });
             mutate(data, false);
             mutate();
-            console.log("calling mutate");
             // ref https://github.com/vercel/swr/issues/908
           }}
         />

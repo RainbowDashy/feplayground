@@ -1,14 +1,7 @@
 import {
-  Box,
   VStack,
   Flex,
-  Heading,
-  Text,
   StackDivider,
-  Center,
-  Avatar,
-  Tooltip,
-  Link,
   Skeleton,
   SkeletonCircle,
 } from "@chakra-ui/react";

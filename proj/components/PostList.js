@@ -1,5 +1,4 @@
 import {
-  Box,
   VStack,
   Flex,
   Heading,
@@ -12,7 +11,6 @@ import {
   LinkBox,
   LinkOverlay,
 } from "@chakra-ui/react";
-import Head from "next/head";
 import NextLink from "next/link";
 import { format, isToday } from "date-fns";
 

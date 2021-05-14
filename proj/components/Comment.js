@@ -1,6 +1,6 @@
 import { Button } from "@chakra-ui/button";
 import { Input } from "@chakra-ui/input";
-import { Flex, HStack, VStack } from "@chakra-ui/layout";
+import { HStack, VStack } from "@chakra-ui/layout";
 import { Textarea } from "@chakra-ui/textarea";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -38,7 +38,7 @@ export default function Comment(props) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-      })
+      });
     } else {
       let { pid } = router.query;
       let data = {
@@ -53,19 +53,25 @@ export default function Comment(props) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-      })
+      });
     }
     setTitle("");
     setContent("");
     setName("");
     if (props.onComment) {
-      props.onComment()
+      props.onComment();
     }
-      
   }
 
   return (
-    <VStack w="960px" direction="column" bg="white" p={2} shadow="md" borderWidth="1px">
+    <VStack
+      w="960px"
+      direction="column"
+      bg="white"
+      p={2}
+      shadow="md"
+      borderWidth="1px"
+    >
       {props.hasTitle && (
         <Input placeholder="Title" value={title} onChange={handleTitle}></Input>
       )}

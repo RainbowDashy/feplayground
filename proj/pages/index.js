@@ -1,16 +1,7 @@
 import { connectToDatabase } from "../utils/mongodb";
 import {
-  Box,
-  VStack,
-  Flex,
-  Heading,
   Text,
-  StackDivider,
   Center,
-  Avatar,
-  Tooltip,
-  Link,
-  Button,
   Accordion,
   AccordionItem,
   AccordionButton,
@@ -21,16 +12,13 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import Head from "next/head";
-import Image from "next/image";
-import NextLink from "next/link";
-import { Fragment, useEffect, useState } from "react";
-import { format, isToday } from "date-fns";
+import { Fragment } from "react";
 import PostList from "../components/PostList";
 import PostListSkeleton from "../components/PostListSkeleton";
 import NavBar from "../components/NavBar";
 import Comment from "../components/Comment";
 import NoMore from "../components/NoMore";
-import useSWR, { mutate, useSWRInfinite } from "swr";
+import { useSWRInfinite } from "swr";
 import fetcher from "../utils/fetcher";
 import { InView } from "react-intersection-observer";
 
@@ -77,7 +65,6 @@ export default function Home({ posts }) {
                 });
                 mutate(data, false);
                 mutate();
-                console.log(mutate);
                 // ref https://github.com/vercel/swr/issues/908
               }}
             />
@@ -112,6 +99,12 @@ export default function Home({ posts }) {
 
 export async function getServerSideProps() {
   const { db } = await connectToDatabase();
-  const posts = await db.collection("posts").find().sort({"_id": -1}).limit(10).skip(0).toArray();
+  const posts = await db
+    .collection("posts")
+    .find()
+    .sort({ _id: -1 })
+    .limit(10)
+    .skip(0)
+    .toArray();
   return { props: { posts } };
 }
